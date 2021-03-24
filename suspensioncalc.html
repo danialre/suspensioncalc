@@ -1,0 +1,432 @@
+<html type="">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="formulas.js"></script>
+    <script src="sim.js"></script>
+    <script src="math.js"></script>
+
+    <style type="text/css">
+        input.form-control {
+            padding: 3px 4px;
+        }
+        input[type=number] {
+            max-width: 6em;
+        }
+        #bars input {
+            max-width: 4.5em;
+        }
+        input.corner {
+            max-width: 4em;
+        }
+        input[readonly] {
+            max-width: 6em;
+            min-width: 5em;
+        }
+        .input-group-text {
+            padding: 3px;
+        }
+        label {
+            margin-right: 0.5em;
+        }
+        .form-group {
+            margin-bottom:8px;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="display:inline;margin:0 1em;">Suspension calculator</h2><div style="display:inline-block;"><button class="btn btn-primary m-2" onclick="importvalues();">Import</button><button class="btn btn-primary m-2" onclick="exportvalues();">Export</button></div>
+    <div class="container-fluid px-0">
+        <div class="row mx-0">
+            <div class="col-12 col-lg-6">
+                <div class="row mx-0">
+                    <div class="card mx-1" id="dimensions">
+                        <h4 class="card-header">Dimensions</h4>
+                        <div class="card-body">
+                            <form>
+                                <div class="row">
+                                    <div class="col"><h5>Front</h5></div>
+                                    <div class="col"><h5>Rear</h5></div>
+                                </div>
+                                <div class="row"><label>Track width</label></div>
+                                <div class="row mb-2">
+                                    <div class="input-group col">
+                                        <input class="form-control" type="number" step="any" id="fronttrackwidth">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">inches</div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group col">
+                                        <input class="form-control" type="number" step="any" id="reartrackwidth">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">inches</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row"><label>Distance between top of struts</label></div>
+                                <div class="row mb-2">
+                                    <div class="input-group col">
+                                        <input class="form-control" type="number" step="any" id="frontstrutspacing">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">inches</div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group col">
+                                        <input class="form-control" type="number" step="any" id="rearstrutspacing">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">inches</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row"><label>Distance between LCA attachments to body</label></div>
+                                <div class="row mb-2">
+                                    <div class="input-group col">
+                                        <input class="form-control" type="number" step="any" id="frontlcaspacing">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">inches</div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group col">
+                                        <input class="form-control" type="number" step="any" id="rearlcaspacing">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">inches</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row"><label>Distance between top of strut to lower ball joint</label></div>
+                                <div class="row mb-2">
+                                    <div class="input-group col">
+                                        <input class="form-control" type="number" step="any" id="frontstrutlength">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">inches</div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group col">
+                                        <input class="form-control" type="number" step="any" id="rearstrutlength">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">inches</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row"><label>Length of LCA (attachment to lower ball joint)</label></div>
+                                <div class="row mb-2">
+                                    <div class="input-group col">
+                                        <input class="form-control" type="number" step="any" id="frontlcalength">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">inches</div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group col">
+                                        <input class="form-control" type="number" step="any" id="rearlcalength">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">inches</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row"><label">Distance between lower ball joint and ground</label></div>
+                                <div class="row mb-2">
+                                    <div class="input-group col">
+                                        <input class="form-control" type="number" step="any" id="frontballjointheight">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">inches</div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group col">
+                                        <input class="form-control" type="number" step="any" id="rearballjointheight">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">inches</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row"><label">Distance between LCA attachment and ground</label></div>
+                                <div class="row mb-2">
+                                    <div class="input-group col">
+                                        <input class="form-control" type="number" step="any" id="frontlcaheight">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">inches</div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group col">
+                                        <input class="form-control" type="number" step="any" id="rearlcaheight">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">inches</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row"><label">Ride height adjustment +/-</label></div>
+                                <div class="row mb-2">
+                                    <div class="input-group col">
+                                        <input class="form-control" type="number" step="any" id="frontrideheight" value=0>
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">inches</div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group col">
+                                        <input class="form-control" type="number" step="any" id="rearrideheight" value=0>
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">inches</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card mx-1">
+                        <h4 class="card-header">Weights and Springs</h4>
+                        <div class="card-body">
+                            <h5>Corner weights</h5>
+                            <form id="weights">
+                                <h6>Front</h6>
+                                <div class="form-row">
+                                    <div class="col input-group">
+                                        <input class="form-control corner" type="number" id="flweight">
+                                        <div class="input-group-append"><div class="input-group-text">lbs</div></div>
+                                    </div>
+                                    <div class="col input-group">
+                                        <input class="form-control corner" type="number" id="frweight">
+                                        <div class="input-group-append"><div class="input-group-text">lbs</div></div>
+                                    </div>
+                                </div>
+                                <div class="mt-1 mb-3 form-row ml-auto input-group">
+                                    <div class="input-group-prepend"><div class="input-group-text">Unsprung</div></div>
+                                    <input class="form-control corner" type="number" id="frontunsprung">
+                                    <div class="input-group-append"><div class="input-group-text">lbs</div></div>
+                                </div>
+                                <h6>Rear</h6>
+                                <div class="form-row">
+                                    <div class="col input-group">
+                                        <input class="form-control corner" type="number" id="rlweight">
+                                        <div class="input-group-append"><div class="input-group-text">lbs</div></div>
+                                    </div>
+                                    <div class="col input-group">
+                                        <input class="form-control corner" type="number" id="rrweight">
+                                        <div class="input-group-append"><div class="input-group-text">lbs</div></div>
+                                    </div>
+                                </div>
+                                <div class="mt-1 form-row ml-auto input-group">
+                                    <div class="input-group-prepend"><div class="input-group-text">Unsprung</div></div>
+                                    <input class="form-control corner" type="number" id="rearunsprung">
+                                    <div class="input-group-append"><div class="input-group-text">lbs</div></div>
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <label for="cgheight">CoG height</label>
+                                    <div class="input-group">
+                                        <input class="form-control" type="number" step="any" id="cgheight">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">inches</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <hr>
+                            <form id="springs">
+                                <div class="form-group">
+                                    <label for="frontspringrate">Front spring rate</label>
+                                    <div class="input-group">
+                                        <input class="form-control" type="number" id="frontspringrate">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">lb/inch</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="frontspringmr">Front strut motion ratio</label>
+                                    <input class="form-control" type="number" max=1 step=".01" id="frontspringmr">
+                                </div>
+                                <div class="form-group">
+                                    <label for="rearspringrate">Rear spring rate</label>
+                                    <div class="input-group">
+                                        <input class="form-control" type="number" id="rearspringrate">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">lb/inch</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rearspringmr">Rear strut motion ratio</label>
+                                    <input class="form-control" type="number" max=1 step=".01" id="rearspringmr">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card mx-1">
+                        <h4 class="card-header">Sway bars</h4>
+                        <div class="card-body" id="bars">
+                            <div class="row">
+                                <div class="col"><h5>Front</h5></div><div class="col"><h5>Rear</h5></div>
+                            </div>
+                            <div class="row"><label>Bar length</label></div>
+                            <div class="row mb-2">
+                                <div class="input-group col">
+                                    <input class="form-control" type="number" step="any" id="frontbarlength">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">in.</div>
+                                    </div>
+                                </div>
+                                <div class="input-group col">
+                                    <input class="form-control" type="number" step="any" id="rearbarlength">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">in.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row"><label>Diameter</label></div>
+                            <div class="row mb-2">
+                                <div class="input-group col">
+                                    <input class="form-control" type="number" step="any" id="frontbardiameter">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">in.</div>
+                                    </div>
+                                </div>
+                                <div class="input-group col">
+                                    <input class="form-control" type="number" step="any" id="rearbardiameter">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">in.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row"><label>Arm length at 90&deg; to bar</label></div>
+                            <div class="row mb-2">
+                                <div class="input-group col">
+                                    <input class="form-control" type="number" step="any" id="frontbarperpendicular">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">in.</div>
+                                    </div>
+                                </div>
+                                <div class="input-group col">
+                                    <input class="form-control" type="number" step="any" id="rearbarperpendicular">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">in.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row"><label>Arm length</label></div>
+                            <div class="row mb-2">
+                                <div class="input-group col">
+                                    <input class="form-control" type="number" step="any" id="frontbararmlength">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">in.</div>
+                                    </div>
+                                </div>
+                                <div class="input-group col">
+                                    <input class="form-control" type="number" step="any" id="rearbararmlength">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">in.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row"><label>Motion ratio</label></div>
+                            <div class="row">
+                                <div class="col">
+                                    <input class="form-control" type="number" max=1 step=".01" id="frontbarmr">
+                                </div>
+                                <div class="col">
+                                    <input class="form-control" type="number" max=1 step=".01" id="rearbarmr">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-0 col-lg-6">
+                <div class="card w-100">
+                    <h4 class="card-header">Results</h4>
+                    <div class="card-body row pt-2">
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col"><h5>Front</h5></div>
+                                <div class="col"><h5>Rear</h5></div>
+                            </div>
+                            <div class="row"><label>Roll Center height</label></div>
+                            <div class="row">
+                                <div class="col"><input class="form-control" id="frontrollcenter" readonly></div>
+                                <div class="col"><input class="form-control" id="rearrollcenter" readonly></div>
+                            </div>
+                            <div class="row"><label>Sway bar spring rate</label></div>
+                            <div class="row">
+                                <div class="col"><input class="form-control" id="frontbarspringrate" readonly></div>
+                                <div class="col"><input class="form-control" id="rearbarspringrate" readonly></div>
+                            </div>
+                            <div class="row"><label>Wheel Rate</label></div>
+                            <div class="row">
+                                <div class="col"><input class="form-control" id="frontwheelrate" readonly></div>
+                                <div class="col"><input class="form-control" id="rearwheelrate" readonly></div>
+                            </div>
+                            <div class="row"><label>Natural Frequency</label></div>
+                            <div class="row">
+                                <div class="col"><input class="form-control" id="frontfrequency" readonly></div>
+                                <div class="col"><input class="form-control" id="rearfrequency" readonly></div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <h5>Weights</h5>
+                            <div class="form-inline row my-2">
+                                <label class="ml-auto" for="frweightdist">F/R Weight distribution</label>
+                                <input class="form-control" id="frweightdist" readonly>
+                            </div>
+                            <div class="form-inline row my-2">
+                                <label class="ml-auto" for="lrweightdist">L/R Weight distribution</label>
+                                <input class="form-control" id="lrweightdist" readonly>
+                            </div>
+                            <div class="form-inline row my-2">
+                                <label class="ml-auto" for="totalweight">Vehicle weight</label>
+                                <input class="form-control" id="totalweight" readonly>
+                            </div>
+                            <h5>Vehicle dynamics</h5>
+                            <div class="form-inline row my-2">
+                                <label class="ml-auto" for="frontrollstiffness">Front roll stiffness</label>
+                                <input class="form-control" id="frontrollstiffness" readonly>
+                            </div>
+                            <div class="form-inline row my-2">
+                                <label class="ml-auto" for="rearrollstiffness">Rear roll stiffness</label>
+                                <input class="form-control" id="rearrollstiffness" readonly>
+                            </div>
+                            <div class="form-inline row my-2">
+                                <label class="ml-auto" for="rollstiffnessdistribution">Roll distribution</label>
+                                <input class="form-control" id="rollstiffnessdistribution" readonly>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-inline row my-2">
+                                <label class="ml-auto" for="totalweighttransfer">Total weight transfer</label>
+                                <input class="form-control" id="totalweighttransfer" readonly>
+                            </div>
+                            <div class="form-inline row my-2">
+                                <label class="ml-auto" for="frontweighttransfer">Front weight transfer</label>
+                                <input class="form-control" id="frontweighttransfer" readonly>
+                            </div>
+                            <div class="form-inline row my-2">
+                                <label class="ml-auto" for="rearweighttransfer">Rear weight transfer</label>
+                                <input class="form-control" id="rearweighttransfer" readonly>
+                            </div>
+                            <div class="form-inline row my-2">
+                                <button class="btn btn-primary float-right" onclick="recalculate();">Recalculate</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card w-100 p-0 my-2" style="min-width:760px;">
+                    <h4 class="card-header">Simulations</h4>
+                    <div class="card-body p-0">
+                        <div class="px-2">
+                            <label class="radio-inline"><input type="radio" name="scenario" value=0 checked>Static</label>
+                            <label class="radio-inline"><input type="radio" name="scenario" value=0.5>0.5g</label>
+                            <label class="radio-inline"><input type="radio" name="scenario" value=1>1g</label>
+                            <label class="radio-inline"><input type="radio" name="scenario" value=1.5>1.5g</label>
+
+                            <label class="radio-inline float-right"><input type="radio" name="simend" value="rear">Rear</label>
+                            <label class="radio-inline float-right"><input type="radio" name="simend" value="front" checked>Front</label>
+                        </div>
+                        <canvas width="750" height="400" id="simCanvas"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
